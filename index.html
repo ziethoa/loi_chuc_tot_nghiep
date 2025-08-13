@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Lời chúc tốt nghiệp babiiii</title>
+</head>
+<body>
+    <section>
+        <div class="main">
+            <canvas id="confetti-canvas"></canvas>
+            
+            <header>
+                <h1 class="title">🎓 Chúc mừng tốt nghiệp, chị nhà của anh! 🎉</h1>
+            </header>
+            
+            <main>
+                <img src="images/avatar.png" alt="Avatar" class="graduate-photo">
+                <div class="message">
+                    <p id="typed-text"></p>
+                </div>
+            </main>
+            
+            <footer>
+                <p>Tháng 8, 2025 – Gia đình yêu thương</p>
+            </footer>
+        </div>
+    </section>
+    <script>
+        const message = "Chúc mừng con gái yêu Tú Anh đã tốt nghiệp! Chúc con luôn thành công và hạnh phúc ❤️";
+            let i = 0;
+            function typeText() {
+                if (i < message.length) {
+                    document.getElementById("typed-text").innerHTML += message.charAt(i);
+                    i++;
+                    setTimeout(typeText, 80);
+                }
+            }
+            window.onload = () => {
+                typeText();
+                startConfetti();
+            };
+
+            // Hiệu ứng pháo giấy
+            const confettiCanvas = document.getElementById("confetti-canvas");
+            const ctx = confettiCanvas.getContext("2d");
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+
+            let confettiPieces = [];
+            const colors = ["#fcd703", "#ff5733", "#33c1ff", "#8cff33", "#ff33da"];
+
+            function randomRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            function createConfetti() {
+                for (let i = 0; i < 150; i++) {
+                    confettiPieces.push({
+                        x: Math.random() * confettiCanvas.width,
+                        y: Math.random() * confettiCanvas.height - confettiCanvas.height,
+                        w: randomRange(5, 10),
+                        h: randomRange(8, 15),
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        speed: randomRange(2, 5),
+                        opacity: randomRange(0.7, 1),
+                        rotation: randomRange(0, 2 * Math.PI),
+                        rotationSpeed: randomRange(-0.05, 0.05)
+                    });
+                }
+            }
+
+            function drawConfetti() {
+                ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+                confettiPieces.forEach((p) => {
+                    ctx.save();
+                    ctx.translate(p.x + p.w / 2, p.y + p.h / 2);
+                    ctx.rotate(p.rotation);
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.opacity;
+                    ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    ctx.restore();
+                    p.y += p.speed;
+                    p.rotation += p.rotationSpeed;
+                    if (p.y > confettiCanvas.height) {
+                        p.y = -10;
+                        p.x = Math.random() * confettiCanvas.width;
+                    }
+                });
+            }
+
+            function startConfetti() {
+                createConfetti();
+                function animate() {
+                    drawConfetti();
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
+
+            window.addEventListener("resize", () => {
+                confettiCanvas.width = window.innerWidth;
+                confettiCanvas.height = window.innerHeight;
+            });
+    </script>
+</body>
+</html>
