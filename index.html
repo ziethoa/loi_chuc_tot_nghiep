@@ -8,104 +8,29 @@
 </head>
 <body>
     <section>
-        <div class="main">
-            <canvas id="confetti-canvas"></canvas>
-            
-            <header>
-                <h1 class="title">
-                    <span>🎓</span> <p>Chúc mừng tốt nghiệp, chị nhà của anh!</p> <span>🎉</span>
-                </h1>
-            </header>
-            
-            <main>
-                <img src="images/avatar.png" alt="Avatar" class="graduate-photo">
-                <div class="message">
-                    <p id="typed-text"></p>
+        <div class="bg">
+            <img src="asset/Screenshot 2025-08-20 234715.png" alt="" class="img-bg">
+            <div class="header">
+                <p class="word-1">Chúc mừng</p>
+                <p class="word-2">Tốt nghiệp</p>
+            </div>
+            <div class="main-big-img">
+                <img src="asset/Screenshot 2025-08-21 000104.png" alt="" class="main-img">
+                <div class="main-small-img">
+                    <img src="asset/Screenshot_2025-08-20_235417-removebg-preview.png" alt="" class="img-1">
+                    <img src="asset/Screenshot_2025-08-20_235041-removebg-preview.png" alt="" class="img-2">
                 </div>
-                <a href="" class="btn"><button>Happy</button></a>
-            </main>
-            
-            <footer>
-                <p>Tháng 8, 2025 – Gia đình yêu thương</p>
-            </footer>
+            </div>
+            <div class="footer">
+                <p class="word-3">Chúc mừng em bé được nhận vào vị trí Vợ của giám đốc.</p>
+                <p class="word-4">Yêu em</p>
+                <p class="word-5">Phan Quốc Huy</p>
+            </div>
         </div>
+        
     </section>
     <script>
-        const message = "Chúc mừng chị nhà đã tốt nghiệp! Chúc em luôn thành công và hạnh phúc ❤️";
-            let i = 0;
-            function typeText() {
-                if (i < message.length) {
-                    document.getElementById("typed-text").innerHTML += message.charAt(i);
-                    i++;
-                    setTimeout(typeText, 80);
-                }
-            }
-            window.onload = () => {
-                typeText();
-                startConfetti();
-            };
-
-            // Hiệu ứng pháo giấy
-            const confettiCanvas = document.getElementById("confetti-canvas");
-            const ctx = confettiCanvas.getContext("2d");
-            confettiCanvas.width = window.innerWidth;
-            confettiCanvas.height = window.innerHeight;
-
-            let confettiPieces = [];
-            const colors = ["#fcd703", "#ff5733", "#33c1ff", "#8cff33", "#ff33da"];
-
-            function randomRange(min, max) {
-                return Math.random() * (max - min) + min;
-            }
-
-            function createConfetti() {
-                for (let i = 0; i < 150; i++) {
-                    confettiPieces.push({
-                        x: Math.random() * confettiCanvas.width,
-                        y: Math.random() * confettiCanvas.height - confettiCanvas.height,
-                        w: randomRange(5, 10),
-                        h: randomRange(8, 15),
-                        color: colors[Math.floor(Math.random() * colors.length)],
-                        speed: randomRange(2, 5),
-                        opacity: randomRange(0.7, 1),
-                        rotation: randomRange(0, 2 * Math.PI),
-                        rotationSpeed: randomRange(-0.05, 0.05)
-                    });
-                }
-            }
-
-            function drawConfetti() {
-                ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-                confettiPieces.forEach((p) => {
-                    ctx.save();
-                    ctx.translate(p.x + p.w / 2, p.y + p.h / 2);
-                    ctx.rotate(p.rotation);
-                    ctx.fillStyle = p.color;
-                    ctx.globalAlpha = p.opacity;
-                    ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-                    ctx.restore();
-                    p.y += p.speed;
-                    p.rotation += p.rotationSpeed;
-                    if (p.y > confettiCanvas.height) {
-                        p.y = -10;
-                        p.x = Math.random() * confettiCanvas.width;
-                    }
-                });
-            }
-
-            function startConfetti() {
-                createConfetti();
-                function animate() {
-                    drawConfetti();
-                    requestAnimationFrame(animate);
-                }
-                animate();
-            }
-
-            window.addEventListener("resize", () => {
-                confettiCanvas.width = window.innerWidth;
-                confettiCanvas.height = window.innerHeight;
-            });
+        
     </script>
 </body>
 </html>

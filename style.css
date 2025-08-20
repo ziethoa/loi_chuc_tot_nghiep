@@ -1,95 +1,222 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
+
+* {
+    font-family: "Dancing Script", cursive;
     margin: 0;
-    background: linear-gradient(120deg, #1a2a6c, #fdbb2d);
-    background-repeat: no-repeat;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --word-color: #87684d;
+    --word-color-2: #6c4d32;
+}
+
+section{
+    width: 100%;
     height: 100vh;
-    color: white;
-    text-align: center;
-    font-family: 'Segoe UI', sans-serif;
-    /* overflow: hidden; */
-}
-
-header {
-    margin-top: 50px;
-}
-
-.title{
-    width: 80%;
-    margin: 0 auto;
+    overflow: hidden;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    flex-wrap: nowrap;
-    gap: 25px;
+    align-items: center;
 }
 
-.title span{
-    height: 100%;
-    margin: auto;
-}
-
-.title p, .title span{
-    font-size: 2.5rem;
-    animation: glow 2s infinite alternate;
-    text-align: center;
-    
-}
-
-.btn{
+.bg{
+    width: auto;
+    height: 100vh;
+    margin: 0 auto;
+    display: inline-block;
     position: relative;
-    z-index: 999;
 }
 
-.btn button:hover{
-    cursor: pointer;
+.img-bg{
+    width: auto;
+    height: 100%;
 }
 
-@keyframes glow {
-    from {
-        text-shadow: 0 0 10px gold;
-    }
-
-    to {
-        text-shadow: 0 0 20px yellow, 0 0 30px orange;
-    }
+.header{
+    position: absolute;
+    top: 7%;
+    left: 10%;
+    width: 100%;
 }
 
-.graduate-photo {
-    width: 200px;
-    border-radius: 50%;
-    border: 5px solid gold;
-    animation: bounce 3s infinite ease-in-out;
-    margin-top: 30px;
+.header p{
+    font-size: 70px;
+    font-weight: 700;
+    color: var(--word-color);
+    line-height: 70px;
 }
 
-@keyframes bounce {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-10px);
-    }
+.header .word-2{
+    padding-left: 10%;
 }
 
-.message {
-    margin-top: 20px;
-    font-size: 1.2rem;
-    padding: 0 20px;
-}
-
-footer {
-    margin-top: 50px;
-    font-size: 0.9rem;
-}
-
-#confetti-canvas {
-    position: fixed;
-    top: 0;
+.main-big-img{
+    position: absolute;
+    top: 20%;
     left: 0;
     width: 100%;
+    height: 60%;
+}
+
+.main-img{
+    width: 60%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.main-small-img{
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+    /* gap: 16px; */
+    justify-content: space-between;
+    width: 90%;
     height: 100%;
-    /* pointer-events: auto; */
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+}
+
+.main-small-img img {
+    max-width: 230px;
+    height: auto;
+    display: block;
+    transform-origin: center center;
+}
+
+.img-1 {
+    transform: rotate(-57deg);
+}
+
+.img-2 {
+    transform: rotate(10deg);
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.footer{
+    position: absolute;
+    bottom: 6%;
+    right: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 60%;
+}
+
+.footer p{
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--word-color-2);
+    line-height: 30px;
+}
+
+/* iPhone 15 Pro Max – dọc: 430 x 932 CSS px */
+@media (max-width: 430px) and (orientation: portrait) {
+
+    /* dùng 100dvh để tránh nhảy thanh địa chỉ iOS */
+    section {
+        height: 100dvh;
+    }
+
+    /* khung chính: cho phép cắt nền một chút để mọi item lọt khung */
+    .bg {
+        width: 100vw;
+        height: 100dvh;
+        overflow: hidden;
+        /* tránh tràn khi xoay/scale */
+    }
+
+    /* nền: fill toàn khung, chấp nhận crop */
+    .img-bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* cho phép cắt xén 1 ít */
+        z-index: 0;
+    }
+
+    /* tiêu đề: thu nhỏ chữ và kéo vào trong 1 chút */
+    .header {
+        top: 5%;
+        left: 6%;
+        width: 88%;
+        z-index: 1;
+    }
+
+    .header p {
+        font-size: 14vw;
+        /* ≈ 43px trên 430px */
+        line-height: 1.05;
+    }
+
+    .header .word-2 {
+        padding-left: 18%;
+    }
+
+    /* vùng ảnh giữa: hạ nhẹ và giảm chiều cao để chừa chỗ cho footer */
+    .main-big-img {
+        top: 25%;
+        height: 56%;
+    }
+
+    /* ảnh tròn giữa: to vừa phải để không đè footer */
+    .main-img {
+        width: 68%;
+    }
+
+    /* cụm 2 ảnh nhỏ: giãn đều 2 bên, giữ ở đáy vùng main */
+    .main-small-img {
+        width: 94%;
+        height: 100%;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+
+    .main-small-img img {
+        max-width: none;
+        width: 34vw;
+        /* ≈ 120px trên 430px */
+        height: auto;
+    }
+
+    .img-1 {
+        transform: rotate(-73deg);
+    }
+
+    /* bớt nghiêng để khỏi tràn */
+
+    /* QUAN TRỌNG: bỏ absolute để không “bay” lên góc trên trên mobile */
+    .img-2 {
+        /* để flex điều khiển vị trí */
+        transform: rotate(8deg);
+    }
+
+    /* footer: kéo vào trong, thu chữ lại để không tràn */
+    .footer {
+        bottom: 4%;
+        right: 6%;
+        width: 68%;
+        align-items: flex-end;
+        z-index: 1;
+    }
+
+    .footer p {
+        font-size: 5.2vw;
+        /* ≈ 18px */
+        line-height: 1.2;
+        text-align: left;
+    }
 }
