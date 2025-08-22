@@ -30,7 +30,63 @@
         
     </section>
     <script>
-        
+        // Thời lượng 1 ký tự và nhịp giữa các chữ/dòng
+        const DURATION = 0.55;   // s, khớp với thời lượng keyframes
+        const STEP = 0.06;   // s, trễ giữa các ký tự
+        const GAP = 0.15;   // s, nghỉ giữa các dòng
+
+        // Tách theo "grapheme" để chữ tiếng Việt hiển thị đúng (có Intl.Segmenter thì dùng)
+        function splitChars(text) {
+            if (window.Intl && Intl.Segmenter) {
+                const seg = new Intl.Segmenter('vi', { granularity: 'grapheme' });
+                return Array.from(seg.segment(text), s => s.segment);
+            }
+            return Array.from(text); // fallback
+        }
+
+        // Animate 1 element theo từng ký tự; trả về thời điểm kết thúc (để dòng sau biết mà nối tiếp)
+        function animateElement(el, direction, baseDelay = 0, step = STEP, duration = DURATION) {
+            const text = el.textContent;
+            el.classList.add('word');               // để áp dụng .word span (opacity, inline-block)
+            el.setAttribute('aria-label', text);    // hỗ trợ screen reader
+            el.textContent = '';                    // xoá text gốc
+
+            const chars = splitChars(text);
+            chars.forEach((ch, i) => {
+                const span = document.createElement('span');
+                span.textContent = ch === ' ' ? '\u00A0' : ch; // giữ khoảng trắng
+                const anim = direction === 'right' ? 'slideFromRight' : 'slideFromLeft';
+                span.style.animation = `${anim} ${duration}s forwards`;
+                span.style.animationDelay = `${baseDelay + i * step}s`;
+                el.appendChild(span);
+            });
+
+            // thời điểm kết thúc của dòng này
+            return baseDelay + (Math.max(chars.length - 1, 0) * step) + duration;
+        }
+
+        // Helper: truyền selector; nếu không có element thì bỏ qua, trả về baseDelay cũ
+        function animateSel(selector, direction, baseDelay, step) {
+            const el = document.querySelector(selector);
+            return el ? animateElement(el, direction, baseDelay, step) : baseDelay;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let t = 0;
+
+            // 1) word-1, word-2: từ phải sang trái (right)
+            t = animateSel('.word-1', 'right', t, 0.06);
+            t += GAP;
+            t = animateSel('.word-2', 'right', t, 0.06);
+            t += GAP;
+
+            // 2) word-3..5: từ trái sang phải (left), có thể cho step lớn hơn chút để đọc dễ hơn
+            t = animateSel('.word-3', 'left', t, 0.05);
+            t += GAP;
+            t = animateSel('.word-4', 'left', t, 0.05);
+            t += GAP;
+            t = animateSel('.word-5', 'left', t, 0.05);
+        });
     </script>
 </body>
 </html>
